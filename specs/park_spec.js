@@ -49,7 +49,7 @@ describe('Park', function() {
 
     const actual = park.dinosaurs;
     assert.deepStrictEqual(actual, [dinosaur1,dinosaur2,dinosaur3,dinosaur4,dinosaur5]);
-    park.remove_a_dinosaur(dinosaur4)
+    park.removeADinosaur(dinosaur4)
     const actual2 = park.dinosaurs;
     assert.deepStrictEqual(actual2, [dinosaur1,dinosaur2,dinosaur3,dinosaur5]);
   });
@@ -61,7 +61,7 @@ describe('Park', function() {
     park.add_dinosaur(dinosaur4)
     park.add_dinosaur(dinosaur5)
 
-    const actual = park.most_popular_dino();
+    const actual = park.mostPopularDino();
     assert.strictEqual(actual, dinosaur2);
   });
 
@@ -72,9 +72,10 @@ describe('Park', function() {
     park.add_dinosaur(dinosaur4)
     park.add_dinosaur(dinosaur5)
     park.add_dinosaur(dinosaur6)
+    dinosaur1.species="Velociraptor";
 
-    const actual = park.locate_all("Velociraptor");
-    assert.deepStrictEqual(actual, [3,5]);
+    const actual = park.locateAll("Velociraptor");
+    assert.deepStrictEqual(actual, [0,3,5]);
   });
 
   it('should be able to remove all dinosaurs of a particular species', function () {
@@ -85,11 +86,42 @@ describe('Park', function() {
     park.add_dinosaur(dinosaur5)
     park.add_dinosaur(dinosaur6)
     dinosaur1.species="Velociraptor";
-    const dinoCorral = park.remove_all("Velociraptor");
+    const dinoCorral = park.removeAll("Velociraptor");
     const dinosRemaining = park.dinosaurs;
     assert.deepStrictEqual(dinoCorral, [dinosaur6,dinosaur4, dinosaur1]);
     assert.deepStrictEqual(dinosRemaining, [dinosaur2,dinosaur3,dinosaur5]);
 
   });
 
+  it('should be able to calculate the daily visitor count', function() {
+    park.add_dinosaur(dinosaur1)
+    park.add_dinosaur(dinosaur2)
+    park.add_dinosaur(dinosaur3)
+    park.add_dinosaur(dinosaur4)
+    park.add_dinosaur(dinosaur5)
+    park.add_dinosaur(dinosaur6)
+    const actual = park.dailyVisitorCount();
+    assert.strictEqual(actual, 570);
+  });
+  it('should be able to calculate the annual visitor count', function() {
+    park.add_dinosaur(dinosaur1)
+    park.add_dinosaur(dinosaur2)
+    park.add_dinosaur(dinosaur3)
+    park.add_dinosaur(dinosaur4)
+    park.add_dinosaur(dinosaur5)
+    park.add_dinosaur(dinosaur6)
+    const actual = park.annualVisitorCount();
+    assert.strictEqual(actual, 208050);
+  });
+
+  it('should be able to calculate the annual revenue from ticket sales', function() {
+    park.add_dinosaur(dinosaur1)
+    park.add_dinosaur(dinosaur2)
+    park.add_dinosaur(dinosaur3)
+    park.add_dinosaur(dinosaur4)
+    park.add_dinosaur(dinosaur5)
+    park.add_dinosaur(dinosaur6)
+    const actual = park.annualRevenue();
+    assert.strictEqual(actual, 20805000);
+  });
 });

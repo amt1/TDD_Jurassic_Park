@@ -12,7 +12,7 @@ Park.prototype.add_dinosaur = function( dinosaur){
 
 // done - Remove a dinosaur from its collection of dinosaurs
 
-Park.prototype.remove_a_dinosaur = function( dinosaur){
+Park.prototype.removeADinosaur = function( dinosaur){
   let my_dino = null;
   let found = this.dinosaurs.includes(dinosaur);
    if (found) {
@@ -21,7 +21,7 @@ Park.prototype.remove_a_dinosaur = function( dinosaur){
 return my_dino;
 };
 
-Park.prototype.compare_popularity = function(x,y) {
+Park.prototype.comparePopularity = function(x,y) {
 // somehow this knows to get the two objects for comparing
     const guestsX = x.guestsAttractedPerDay;
     const guestsY = y.guestsAttractedPerDay;
@@ -43,20 +43,19 @@ Park.prototype.compare_popularity = function(x,y) {
 
 // done - Find the dinosaur that attracts the most visitors
 
-Park.prototype.most_popular_dino = function(){
-  this.dinosaurs.sort(this.compare_popularity);
+Park.prototype.mostPopularDino = function(){
+  this.dinosaurs.sort(this.comparePopularity);
 return this.dinosaurs[0];
 };
 
 // - Find all dinosaurs of a particular species
 // - Assuming this means locate them not fetch them:
 
-Park.prototype.locate_all = function(species_to_find){
+Park.prototype.locateAll = function(species_to_find){
   var locations = [];
-  for (var dino of this.dinosaurs) {
-//    console.log(dino); // lists dinosaur objects
-    if (dino.species === species_to_find) {
-      locations.push(this.dinosaurs.indexOf(dino));
+  for (var i = 0; i < this.dinosaurs.length; i++) {
+    if (this.dinosaurs[i].species === species_to_find) {
+      locations.push(i);
     };
   };
 return locations;
@@ -65,7 +64,7 @@ return locations;
 // - Remove all dinosaurs of a particular species
 // - Assuming this means remove them and return them:
 
-Park.prototype.remove_all = function(species_to_remove){
+Park.prototype.removeAll = function(species_to_remove){
   var counter = this.dinosaurs.length;
   var corral = [];
   while (counter--) {
@@ -76,12 +75,29 @@ Park.prototype.remove_all = function(species_to_remove){
   return corral;
 };
 // note array returned is reversed due to loop counting backwards
-
+// sawing the branch off on the other side :)
 
 // - Calculate the total number of visitors per day
+
+Park.prototype.dailyVisitorCount = function(){
+  var totalGuests = 0;
+  for (var dino of this.dinosaurs) {
+    totalGuests += dino.guestsAttractedPerDay;
+  };
+  return totalGuests;
+};
+
 // - Calculate the total number of visitors per year
+
+Park.prototype.annualVisitorCount = function(){
+ return this.dailyVisitorCount() * 365;
+};
+
 // - Calculate the total revenue from ticket sales for one year
-//
+
+Park.prototype.annualRevenue = function(){  
+ return this.ticketPrice * this.annualVisitorCount();
+};
 
 
 
