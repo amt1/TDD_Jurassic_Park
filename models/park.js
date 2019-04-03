@@ -1,13 +1,17 @@
-const Park = function (name, ticketPrice, dinosaurs) {
+const Diet = require('../models/diet.js');
+
+const Park = function (name, ticketPrice, dinosaurs, dietCounter) {
   this.name = name;
   this.ticketPrice = ticketPrice;
   this.dinosaurs = dinosaurs;
-}
+  this.dietCounter = dietCounter;
+};
 
 // Done - Add a dinosaur to its collection of dinosaurs
 
 Park.prototype.add_dinosaur = function( dinosaur){
   this.dinosaurs.push(dinosaur);
+  this.dietCounter.add(dinosaur.diet);
 };
 
 // done - Remove a dinosaur from its collection of dinosaurs
@@ -95,7 +99,7 @@ Park.prototype.annualVisitorCount = function(){
 
 // - Calculate the total revenue from ticket sales for one year
 
-Park.prototype.annualRevenue = function(){  
+Park.prototype.annualRevenue = function(){
  return this.ticketPrice * this.annualVisitorCount();
 };
 

@@ -1,21 +1,22 @@
 const assert = require('assert');
 const Park = require('../models/park.js');
 const Dinosaur = require('../models/dinosaur.js');
+const DietCounter = require('../models/diet.js');
 
 describe('Park', function() {
 
   let park;
+  let dietCounter1;
 
   beforeEach(function () {
-      park = new Park('Jurassic Park', 100, []);
+      dietCounter1 = new DietCounter();
+      park = new Park('Jurassic Park', 100, [], dietCounter1);
       dinosaur1 = new Dinosaur("Triceratops", "Plants", 100);
       dinosaur2 = new Dinosaur("Diplodocus", "Plants", 200);
       dinosaur3 = new Dinosaur("Pterodactyl", "Fish", 150);
       dinosaur4 = new Dinosaur("Velociraptor", "Everything", 10);
       dinosaur5 = new Dinosaur("Triceratops", "Plants", 100);
       dinosaur6 = new Dinosaur("Velociraptor", "Everything", 10);
-
-
   });
 
   it('should have a name', function () {
@@ -124,4 +125,22 @@ describe('Park', function() {
     const actual = park.annualRevenue();
     assert.strictEqual(actual, 20805000);
   });
+
+  it('should count the dinosaurs diets', function () {
+    park.add_dinosaur(dinosaur1)
+    park.add_dinosaur(dinosaur2)
+    park.add_dinosaur(dinosaur3)
+    park.add_dinosaur(dinosaur4)
+    park.add_dinosaur(dinosaur5)
+    park.add_dinosaur(dinosaur6)
+    const actual1 = park.dietCounter.herbivores;
+    const actual2 = park.dietCounter.carnivores;
+    const actual3 = park.dietCounter.omnivores;
+
+    assert.strictEqual(actual1,3);
+    assert.strictEqual(actual2,1);
+    assert.strictEqual(actual3,2);
+
+  });
+
 });
